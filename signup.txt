@@ -1,0 +1,51 @@
+Here’s how the signup process works step-by-step:
+
+1. Database Connection:
+The function dbConnect() is called at the beginning to ensure a connection to the database is established. This is necessary because Next.js API routes run as serverless functions, which means they might not always maintain an active database connection.
+
+2. Extracting User Data:
+The user data (username, email, and password) is retrieved from the request body using await request.json(). This data will be used to create a new user or update an existing one.
+
+3. Checking for Existing Users:
+Username Check:
+The code checks if there is an existing user with the given username who is already verified. If such a user is found, it returns a response indicating that the username is already taken, with a status code of 400.
+
+Email Check:
+If there is no verified user with the same username, it then checks for a user with the given email. If an existing user is found, the code handles two cases:
+
+User is Verified:
+If the user with that email is already verified, the function returns a response indicating that an account already exists with the provided email.
+
+User is Not Verified:
+If the user is found but is not verified, it means they had previously started the signup process but didn’t complete the email verification. In this case, the existing user’s details are updated with the new information, including:
+
+Updating the username.
+Hashing the new password using bcrypt and updating it.
+Generating a new verification code (verifyCode) and setting an expiration time (verifyCodeExpiry) one hour from the current time.
+Saving these updates to the database.
+
+4. Creating a New User:
+If no existing user is found by email, it creates a new user entry in the database. The process includes:
+
+Hashing the password using bcrypt.
+Generating a verification code and setting an expiration time for it.
+Setting initial values for properties like isVerified (false), isAcceptingMessages (true), and messages (an empty array).
+Saving the new user object to the database.
+
+5. Sending the Verification Email:
+Once the user data is updated or a new user is created, a verification email is sent using the sendVerificationEmail() function.
+If the email sending fails, it returns an error response with a status code of 500.
+
+6. Returning a Successful Response:
+If the verification email is sent successfully, the function responds with a success message, informing the user to verify their account to complete the registration process. The response status code is set to 201 (Created).
+
+7. Error Handling:
+If any error occurs during the process (database connection, user creation, email sending), a 500 error response is returned with a generic error message.
+
+Summary:
+This function implements a user signup workflow that handles:
+
+Checking if a username or email is already in use.
+Updating user details if they previously registered but didn’t verify their email.
+Creating a new user if no matching email is found.
+Sending an email verification code to the user to complete the registration process.
