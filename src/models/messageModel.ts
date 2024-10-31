@@ -4,14 +4,14 @@ import { string } from "zod";
 //messageSchema type
 export interface MessageSchemaType extends Document
 {
-    content: String;
+    content: string;
     createdAt: Date;
 }
 
 //messageSchema
 export const messageSchema: Schema<MessageSchemaType>= new Schema({
     content:{
-        type: string,
+        type: String,
         required: true,
     },
     createdAt:{
