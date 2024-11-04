@@ -3,7 +3,7 @@ import UserModel from "@/models/userModel";
 import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from '@/utils/sendVerificationEmail';
 
-async function POST(request: Request)
+export async function POST(request: Request)
 {
     dbConnect();
 
@@ -86,6 +86,8 @@ async function POST(request: Request)
               { status: 500 }
             );
         }
+
+        console.log("Email sent for verification", emailResponse);
 
         return Response.json(
             {
