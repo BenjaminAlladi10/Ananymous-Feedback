@@ -16,6 +16,7 @@ export async function POST(request: Request)
         });
 
         if (existingVerifiedUserByUsername) {
+            console.log("Verified User already exists with this username");
             return Response.json(
               {
                 success: false,
@@ -32,6 +33,7 @@ export async function POST(request: Request)
         {
             if(existingUserByEmail.isVerified)
             {
+                console.log("Verified User already exists with this email");
                 return Response.json(
                     {
                       success: false,
@@ -42,6 +44,7 @@ export async function POST(request: Request)
             }
             else
             {
+                console.log("Unverified user found and updating his/her details...");
                 const hashedPassword = await bcrypt.hash(password, 10);
 
                 existingUserByEmail.username = username;
@@ -53,6 +56,7 @@ export async function POST(request: Request)
         }
         else
         {
+            console.log("Creating new User...");
             const hashedPassword = await bcrypt.hash(password, 10);
             const expiryDate = new Date();
             expiryDate.setHours(expiryDate.getHours() + 1);
