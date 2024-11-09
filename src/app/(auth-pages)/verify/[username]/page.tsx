@@ -35,13 +35,16 @@ export default function Page() {
     });
 
     const onSubmit= async(data: z.infer<typeof verifySchema>)=>{
-        // console.log("form:", form);
-        // console.log("data:", data);
+        console.log("form:", form);
+        console.log("data:", data);
+
+        const username= decodeURIComponent(params?.username as string);
+        console.log("username:", username);
 
         try 
         {
             const response = await axios.post("/api/verify-code", {
-                username: params.username,
+                username: username,
                 code: data.code,
               });
         

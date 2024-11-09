@@ -31,8 +31,6 @@ export default function SignInForm() {
 
   const { toast } = useToast();
 
-  const {data:session}= useSession();
-  const user= session?.user;
 
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
     // console.log("from:", form);
@@ -57,19 +55,19 @@ export default function SignInForm() {
       else {
         toast({
           title: 'Error',
-          description: result.error,
+          description: "Error in Signing in, please verify",
           variant: 'destructive',
         });
       }
     }
 
     if (result?.url) {
-      // console.log(session);
-      toast({
-        title: 'Login success',
-        description: `Welcome, ${user?.username}!`,
-      });
 
+      toast({
+        title: "Login Success",
+        description: "Welcome to the Ananymous world!"
+      });
+      
       console.log("Redirecting to dashboard...");
       router.replace('/dashboard');
     }
