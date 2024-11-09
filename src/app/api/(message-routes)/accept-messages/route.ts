@@ -29,7 +29,7 @@ export async function POST(request: NextRequest)
     {
         await dbConnect();
 
-        const updatedUser= UserModel.findByIdAndUpdate(userId, {isAcceptingMessages: acceptMessages});
+        const updatedUser= UserModel.findByIdAndUpdate(userId, {isAcceptingMessages: acceptMessages}).exec();
 
         if (!updatedUser) {
             // User not found

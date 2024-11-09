@@ -14,9 +14,10 @@ import { Separator } from '@radix-ui/react-separator';
 import { Button } from '@/components/ui/button';
 import { Loader2, RefreshCcw } from 'lucide-react';
 import { MessageCard } from '@/components/MessageCard';
-import { Switch } from '@radix-ui/react-switch';
+import {Switch} from '@/components/ui/switch';
 
-export default function page() {
+export default function page()
+{
     const [messages, setMessages]= useState<MessageSchemaType[]>([]);
     const [isMessagesLoading, setIsMessagesLoading]= useState(false);
 
@@ -39,6 +40,7 @@ export default function page() {
     });
 
     const acceptMessagesFieldValue= watch("acceptMessages");
+    console.log("1 acceptMessagesFieldValue:", acceptMessagesFieldValue);
 
     // Fetching Initial Switch Status 
     const fetchAcceptMessages= useCallback(async ()=>{
@@ -65,7 +67,7 @@ export default function page() {
         {
             setIsSwitchLoading(false);
         } 
-    }, [setValue]);
+    }, [setValue, toast]);
 
     // Toggling the Switch Status
     const handleSwitchChange= async()=>{
@@ -75,9 +77,8 @@ export default function page() {
                 acceptMessages: !acceptMessagesFieldValue
             });
 
-            console.log("!acceptMessagesFieldValue:", !acceptMessagesFieldValue);
-
             setValue('acceptMessages', !acceptMessagesFieldValue);
+            console.log("2 acceptMessagesFieldValue:", !acceptMessagesFieldValue);
 
             toast({
                 title: res.data.message,
