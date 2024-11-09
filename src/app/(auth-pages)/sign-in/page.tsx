@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import {
   Form,
   FormField,
@@ -30,6 +30,9 @@ export default function SignInForm() {
   });
 
   const { toast } = useToast();
+
+  const {data:session}= useSession();
+  const user= session?.user;
 
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
     // console.log("from:", form);
@@ -61,6 +64,13 @@ export default function SignInForm() {
     }
 
     if (result?.url) {
+      // console.log(session);
+      toast({
+        title: 'Login success',
+        description: `Welcome, ${user?.username}!`,
+      });
+
+      console.log("Redirecting to dashboard...");
       router.replace('/dashboard');
     }
   };

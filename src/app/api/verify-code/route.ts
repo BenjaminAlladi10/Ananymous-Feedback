@@ -11,10 +11,10 @@ export async function POST(request: NextRequest)
 
     try 
     {
-        const {username, VerificationCode}= await request.json();
+        const {username, code}= await request.json();
 
         const res= verifySchema.safeParse({
-            code: VerificationCode
+            code: code
         });
 
         if(!res.success)
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest)
             });
         }
 
-        let code= res.data.code;
+        let _code= res.data.code;
 
         const user= await UserModel.findOne({username});
         if (!user) {
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest)
         }
         
         // Check if the code is correct and not expired
-        const isCodeValid = code === user.verificationCode;
+        const isCodeValid = _code === user.verificationCode;
         const isCodeNotExpired = new Date() < new Date(user.verificationCodeExpiry);
 
         if (isCodeValid && isCodeNotExpired) {
