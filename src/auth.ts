@@ -101,7 +101,7 @@ const authOptions= {
         // error: '/error'
     },
 
-    secret: process.env.AUTH_SECRET
+    secret: process.env.NEXTAUTH_SECRET
 };
 
 export const {handlers, auth, signIn, signOut}= NextAuth(authOptions);
