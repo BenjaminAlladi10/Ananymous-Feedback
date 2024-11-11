@@ -4,14 +4,12 @@ import React from 'react';
 import {
   Carousel,
   CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+  CarouselItem
 } from "@/components/ui/carousel";
 
 import Autoplay from "embla-carousel-autoplay";
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import messages from "@/carouselMessages.json";
 import { Mail } from 'lucide-react';
 
@@ -57,7 +55,7 @@ export default function page() {
 
       {/* Footer */}
       <footer className="text-center p-4 md:p-6 bg-gray-900 text-white">
-        © 2023 True Feedback. All rights reserved.
+        © 2024 Anonymous Feedback. All rights reserved.
       </footer>
 
     </div>

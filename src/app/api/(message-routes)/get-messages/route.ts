@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import mongoose from "mongoose";
 import { User } from "next-auth";
 
-export async function GET(request: Request) {
+export async function GET() {
     await dbConnect();
     const session = await auth();
     const _user: User = session?.user;

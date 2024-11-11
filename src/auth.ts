@@ -5,6 +5,13 @@ import dbConnect from "./lib/dbConnect";
 import User from "./models/userModel";
 import bcrypt from "bcrypt";
 
+// Credentials: {
+//   redirect: 'false',
+//   identifier: 'xyz',
+//   password: 'xyz123',
+//   csrfToken: '282732d58296e3ed0ff296b484811e49198002de74d25597719a8e44443ddf00',
+//   callbackUrl: 'http://localhost:3000/sign-in'
+// }
 
 const authOptions= {
     providers:[
@@ -18,7 +25,7 @@ const authOptions= {
                 password:{label:"Password", type:"password", placeholder:"******"}
             },
 
-            authorize: async (credentials: any, request): Promise<any> => {
+            authorize: async (credentials: any): Promise<any> => {
                 await dbConnect();
 
                 if (!credentials) {
@@ -58,26 +65,27 @@ const authOptions= {
                 catch (error:any) {
                     throw new Error(error.message || "Authentication error");
                 }
-        }})
+            }
+        })
     ],
 
     callbacks:{
         async jwt({ token, user }: { token:any, user:any}) {
             if(user) {
-                token._id = user._id?.toString(),
-                token.username = user.username,
-                token.isVerified = user.isVerified,
-                token.isAcceptingMessages = user.isAcceptingMessages
+                token._id = user._id?.toString();
+                token.username = user.username;
+                token.isVerified = user.isVerified;
+                token.isAcceptingMessages = user.isAcceptingMessages;
             }
             return token
         },
 
         async session({ session, token } :{ session: any, token: any}) {
             if(token) {
-                session.user._id = token._id?.toString(),
-                session.user.username = token.username,
-                session.user.isVerified = token.isVerified,
-                session.user.isAcceptingMessages = token.isAcceptingMessages
+                session.user._id = token._id?.toString();
+                session.user.username = token.username;
+                session.user.isVerified = token.isVerified;
+                session.user.isAcceptingMessages = token.isAcceptingMessages;
             }
             return session
         }

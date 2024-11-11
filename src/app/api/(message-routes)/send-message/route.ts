@@ -1,8 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/userModel";
-import { auth } from "@/auth";
-import mongoose from "mongoose";
-import { User } from "next-auth";
 
 
 // sending messages to targeted User

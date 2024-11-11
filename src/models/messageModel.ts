@@ -1,5 +1,4 @@
 import {Schema, Document} from "mongoose";
-import { string } from "zod";
 
 //messageSchema type
 export interface MessageSchemaType extends Document

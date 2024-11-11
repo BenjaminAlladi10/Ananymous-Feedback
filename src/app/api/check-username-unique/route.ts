@@ -4,7 +4,7 @@ import { z } from "zod";
 import { usernameValidation } from "@/zodSchemas/signUpSchema";
 import { NextRequest } from "next/server";
 
-let usernameQuerySchema= z.object({
+const usernameQuerySchema= z.object({
     username: usernameValidation
 });
 
@@ -14,7 +14,7 @@ export async function GET(request:NextRequest)
 
     try {
         const {searchParams}= new URL(request.url);
-        let username= searchParams.get("username");
+        const username= searchParams.get("username");
 
         const usernameQuery= {
             username
@@ -33,7 +33,7 @@ export async function GET(request:NextRequest)
             },{status: 400});
         }
 
-        let {data}= res;
+        const {data}= res;
 
         const existingVerifiedUser= await UserModel.findOne({username: data.username, isVerified: true});
         console.log("existingVerifiedUser:", existingVerifiedUser);
@@ -49,7 +49,7 @@ export async function GET(request:NextRequest)
         return Response.json({
             success: true,
             message: "Username is available"
-        },{status: 200});``
+        },{status: 200});
     } 
     catch (error) {
         console.error("Error checking username", error);

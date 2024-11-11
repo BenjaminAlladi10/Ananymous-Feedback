@@ -1,12 +1,11 @@
 import { auth } from "@/auth";
-import { useToast } from "@/hooks/use-toast";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/userModel";
 import { NextRequest } from "next/server";
 
-export async function DELETE(request: NextRequest, {params}:{params:{messageId:string}})
+export async function DELETE(request: NextRequest, {params}: {params: Promise<{messageId:string}>})
 {
-    const messageId= params.messageId;
+    const messageId= (await params).messageId;
 
     await dbConnect();
     const session= await auth();

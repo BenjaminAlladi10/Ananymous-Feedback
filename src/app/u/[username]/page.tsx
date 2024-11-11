@@ -24,7 +24,7 @@ import { ApiResponse } from '@/types/ApiResponse';
 import axios, { AxiosError } from 'axios';
 
 
-export default function page() {
+export default function Page() {
     const [isSending, setIsSending]= useState(false);
 
     const params= useParams();

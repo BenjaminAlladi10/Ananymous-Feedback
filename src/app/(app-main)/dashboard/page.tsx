@@ -16,7 +16,7 @@ import { Loader2, RefreshCcw } from 'lucide-react';
 import { MessageCard } from '@/components/MessageCard';
 import {Switch} from '@/components/ui/switch';
 
-export default function page()
+export default function Page()
 {
     const [messages, setMessages]= useState<MessageSchemaType[]>([]);
     const [isMessagesLoading, setIsMessagesLoading]= useState(false);
@@ -26,13 +26,12 @@ export default function page()
     const {toast}= useToast();
 
     const handleDeleteMessage= (messageId: string)=>{
-        setMessages((prevMessages)=> prevMessages.filter((message, index, prevMessages)=> message._id!== messageId))
+        setMessages((prevMessages)=> prevMessages.filter((message)=> message._id!== messageId))
     };
 
     const {data: session}= useSession();
-    const user= session?.user;
 
-    const {register, handleSubmit, watch, setValue}= useForm({
+    const {register, watch, setValue}= useForm({
         resolver: zodResolver(acceptMessageSchema),
         defaultValues: {
             acceptMessages: false
@@ -117,7 +116,6 @@ export default function page()
         } 
         catch(error) 
         {
-            const axiosError = error as AxiosError<ApiResponse>;
             console.log("error:", error);
 
             // toast({
@@ -195,7 +193,7 @@ export default function page()
 
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
                 {messages.length > 0 ? (
-                    messages.map((message, index) => (
+                    messages.map((message) => (
                         <MessageCard key={message._id as string} message={message} onMessageDelete={handleDeleteMessage}/>
                     ))
                 ):(

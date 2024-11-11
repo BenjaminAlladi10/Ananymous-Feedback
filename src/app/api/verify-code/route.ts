@@ -1,6 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/userModel";
-import { z } from "zod";
 import { verifySchema } from "@/zodSchemas/verifySchema";
 import { NextRequest } from "next/server";
 
@@ -25,7 +24,7 @@ export async function POST(request: NextRequest)
             });
         }
 
-        let _code= res.data.code;
+        const _code= res.data.code;
 
         const user= await UserModel.findOne({username});
         if (!user) {
