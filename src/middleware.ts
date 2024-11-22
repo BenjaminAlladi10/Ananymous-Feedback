@@ -5,12 +5,13 @@ import { getToken } from 'next-auth/jwt';
 
 export async function middleware(request: NextRequest)
 {
-    const secret = process.env.AUTH_SECRET || 'your-secret';
+    console.log("Middleware called");
+    const secret = process.env.NEXTAUTH_SECRET || 'your-secret';
 
     const token = await getToken({ req: request, secret });
     const url = request.nextUrl;
 
-    // console.log(secret, token, url);
+    console.log(secret, token, url);
 
     if (
         token &&
